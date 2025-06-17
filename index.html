@@ -6,11 +6,10 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>🎲 ゾロ目サイコロゲーム</h1>
+  <h1>🎲 自動ゾロ目サイコロゲーム</h1>
 
   <label for="dice-count">サイコロの数：</label>
   <select id="dice-count">
-    <!-- 2〜10個まで選べる -->
     <option value="2">2</option>
     <option value="3" selected>3</option>
     <option value="4">4</option>
@@ -22,10 +21,15 @@
     <option value="10">10</option>
   </select>
 
-  <button onclick="rollDice()">サイコロを振る</button>
+  <button onclick="startAutoRoll()">ゾロ目出るまで自動で振る</button>
 
   <div id="dice-container"></div>
   <p id="result-message"></p>
+
+  <h3>出目履歴（最大10件）</h3>
+  <ul id="history-list"></ul>
+
+  <audio id="success-sound" src="success.mp3" preload="auto"></audio>
 
   <script src="script.js"></script>
 </body>
