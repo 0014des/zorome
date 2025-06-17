@@ -1,7 +1,7 @@
 body {
   font-family: sans-serif;
   text-align: center;
-  background-color: #f9f9f9;
+  background-color: #f0f0f0;
 }
 
 #dice-container {
@@ -9,7 +9,6 @@ body {
   justify-content: center;
   flex-wrap: wrap;
   margin: 20px auto;
-  max-width: 600px;
 }
 
 .dice {
@@ -18,8 +17,29 @@ body {
   height: 60px;
   margin: 10px;
   line-height: 60px;
-  background: #fff;
+  background: white;
   border: 2px solid #333;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+  animation: shake 0.2s;
+}
+
+@keyframes shake {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(10deg); }
+  50% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+#result-message {
+  font-size: 1.2em;
+  margin-top: 10px;
+}
+
+#history-list {
+  list-style: none;
+  padding: 0;
+  max-width: 300px;
+  margin: 0 auto;
 }
