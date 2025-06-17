@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ゾロ目サイコロゲーム</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🎲 ゾロ目サイコロゲーム</h1>
+
+  <label for="dice-count">サイコロの数：</label>
+  <select id="dice-count">
+    <!-- 2〜10個まで選べる -->
+    <option value="2">2</option>
+    <option value="3" selected>3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+  </select>
+
+  <button onclick="rollDice()">サイコロを振る</button>
+
+  <div id="dice-container"></div>
+  <p id="result-message"></p>
+
+  <script src="script.js"></script>
+</body>
+</html>
