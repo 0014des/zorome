@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>🎲 自動ゾロ目サイコロゲーム</h1>
+  <h1>🎲 ゾロ目サイコロゲーム</h1>
 
   <label for="dice-count">サイコロの数：</label>
   <select id="dice-count">
@@ -21,12 +21,15 @@
     <option value="10">10</option>
   </select>
 
-  <button onclick="startAutoRoll()">ゾロ目出るまで自動で振る</button>
+  <div>
+    <button onclick="rollOnce()">🎲 1回振る</button>
+    <button onclick="startAutoRoll()">🔁 ゾロ目出るまで自動</button>
+  </div>
 
   <div id="dice-container"></div>
   <p id="result-message"></p>
 
-  <h3>出目履歴（最大10件）</h3>
+  <h3>出目履歴（最大100件）</h3>
   <ul id="history-list"></ul>
 
   <audio id="success-sound" src="success.mp3" preload="auto"></audio>
