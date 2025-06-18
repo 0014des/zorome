@@ -1,12 +1,28 @@
 let autoRolling = false;
 let history = [];
-
 const sound = document.getElementById("success-sound");
+
+function rollOnce() {
+  if (autoRolling) return;
+  const result = rollDice();
+  const isZoro = isZorome(result);
+
+  if (isZoro) {
+    document.getElementById("result-message").textContent = `🎉 ゾロ目成功！出目は ${result[0]}！`;
+    document.getElementById("result-message").style.color = "green";
+    sound.currentTime = 0;
+    sound.play();
+  } else {
+    document.getElementById("result-message").textContent = `出目: ${result.join(", ")}（ゾロ目ではありません）`;
+    document.getElementById("result-message").style.color = "black";
+  }
+}
 
 function startAutoRoll() {
   if (autoRolling) return;
   autoRolling = true;
-  document.getElementById("result-message").textContent = "ゾロ目が出るまで自動で振っています...";
+  document.getElementById("result-message").textContent = "ゾロ目が出るまで振り続けています...";
+  document.getElementById("result-message").style.color = "black";
 
   const interval = setInterval(() => {
     const result = rollDice();
@@ -16,6 +32,7 @@ function startAutoRoll() {
       sound.currentTime = 0;
       sound.play();
       document.getElementById("result-message").textContent = `🎉 ゾロ目成功！出目は ${result[0]}！`;
+      document.getElementById("result-message").style.color = "green";
     }
   }, 200);
 }
@@ -47,7 +64,7 @@ function isZorome(arr) {
 function addToHistory(result) {
   const historyList = document.getElementById("history-list");
   history.unshift(result.join(", "));
-  if (history.length > 10) history.pop();
+  if (history.length > 100) history.pop();
 
   historyList.innerHTML = "";
   history.forEach(entry => {
@@ -56,4 +73,3 @@ function addToHistory(result) {
     historyList.appendChild(li);
   });
 }
-
