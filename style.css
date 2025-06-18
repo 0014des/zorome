@@ -2,6 +2,7 @@ body {
   font-family: sans-serif;
   text-align: center;
   background-color: #f0f0f0;
+  padding: 20px;
 }
 
 #dice-container {
@@ -40,6 +41,7 @@ body {
 #history-list {
   list-style: none;
   padding: 0;
-  max-width: 300px;
+  max-width: 400px;
   margin: 0 auto;
+  text-align: left;
 }
