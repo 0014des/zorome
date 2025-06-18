@@ -1,39 +1,77 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>ゾロ目サイコロゲーム</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <h1>🎲 ゾロ目サイコロゲーム</h1>
+let autoRolling = false;
+let history = [];
 
-  <label for="dice-count">サイコロの数：</label>
-  <select id="dice-count">
-    <option value="2">2</option>
-    <option value="3" selected>3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
-    <option value="7">7</option>
-    <option value="8">8</option>
-    <option value="9">9</option>
-    <option value="10">10</option>
-  </select>
+function playSuccessSound() {
+  const sound = new Audio("success.mp3");
+  sound.play();
+}
 
-  <div>
-    <button onclick="rollOnce()">🎲 1回振る</button>
-    <button onclick="startAutoRoll()">🔁 ゾロ目出るまで自動</button>
-  </div>
+function rollOnce() {
+  if (autoRolling) return;
+  const result = rollDice();
+  const isZoro = isZorome(result);
 
-  <div id="dice-container"></div>
-  <p id="result-message"></p>
+  if (isZoro) {
+    document.getElementById("result-message").textContent = `🎉 ゾロ目成功！出目は ${result[0]}！`;
+    document.getElementById("result-message").style.color = "green";
+    playSuccessSound();
+  } else {
+    document.getElementById("result-message").textContent = `出目: ${result.join(", ")}（ゾロ目ではありません）`;
+    document.getElementById("result-message").style.color = "black";
+  }
+}
 
-  <h3>出目履歴（最大100件）</h3>
-  <ul id="history-list"></ul>
+function startAutoRoll() {
+  if (autoRolling) return;
+  autoRolling = true;
+  document.getElementById("result-message").textContent = "ゾロ目が出るまで振り続けています...";
+  document.getElementById("result-message").style.color = "black";
 
-  <audio id="success-sound" src="success.mp3" preload="auto"></audio>
+  const interval = setInterval(() => {
+    const result = rollDice();
+    if (isZorome(result)) {
+      clearInterval(interval);
+      autoRolling = false;
+      document.getElementById("result-message").textContent = `🎉 ゾロ目成功！出目は ${result[0]}！`;
+      document.getElementById("result-message").style.color = "green";
+      playSuccessSound();
+    }
+  }, 200);
+}
 
-  <script src="script.js"></script>
-</body>
-</html>
+function rollDice() {
+  const container = document.getElementById("dice-container");
+  const count = parseInt(document.getElementById("dice-count").value);
+  const result = [];
+  container.innerHTML = "";
+
+  for (let i = 0; i < count; i++) {
+    const value = Math.floor(Math.random() * 6) + 1;
+    result.push(value);
+
+    const dice = document.createElement("div");
+    dice.className = "dice";
+    dice.textContent = value;
+    container.appendChild(dice);
+  }
+
+  addToHistory(result);
+  return result;
+}
+
+function isZorome(arr) {
+  return arr.every(val => val === arr[0]);
+}
+
+function addToHistory(result) {
+  const historyList = document.getElementById("history-list");
+  history.unshift(result.join(", "));
+  if (history.length > 100) history.pop();
+
+  historyList.innerHTML = "";
+  history.forEach(entry => {
+    const li = document.createElement("li");
+    li.textContent = entry;
+    historyList.appendChild(li);
+  });
+}
